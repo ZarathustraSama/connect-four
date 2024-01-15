@@ -41,6 +41,10 @@ class Grid
     nil
   end
 
+  def check_winner
+    check_column_winner || check_row_winner || check_diagonal_winner
+  end
+
   private
 
   def initial_state
