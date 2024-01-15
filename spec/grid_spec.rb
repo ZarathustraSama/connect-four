@@ -28,7 +28,7 @@ describe Grid do
   end
 
   describe '#check_row_winner' do
-    context 'where there aren\'t four consecutive pieces' do
+    context 'when there aren\'t four consecutive pieces' do
       subject(:grid) { described_class.new }
 
       it 'returns nil' do
@@ -45,6 +45,30 @@ describe Grid do
 
       it 'returns the winner' do
         expect(grid.check_row_winner).to eql(DIAMOND)
+      end
+    end
+  end
+
+  describe '#check_diagonal_winner' do
+    context 'when there aren\'t four consecutive pieces' do
+      subject(:grid) { described_class.new }
+
+      it 'returns nil' do
+        expect(grid.check_diagonal_winner).to eql(nil)
+      end
+    end
+
+    context 'when there are four consecutive pieces' do
+      g = []
+      g << [HEART, DIAMOND, EMPTY, EMPTY, EMPTY, EMPTY]
+      g << [DIAMOND, HEART, EMPTY, EMPTY, EMPTY, EMPTY]
+      g << [DIAMOND, DIAMOND, HEART, EMPTY, EMPTY, EMPTY]
+      g << [DIAMOND, DIAMOND, HEART, HEART, EMPTY, EMPTY]
+      3.times { g << [HEART, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY] }
+      subject(:grid) { described_class.new(g) }
+
+      it 'returns the winner' do
+        expect(grid.check_diagonal_winner).to eql(HEART)
       end
     end
   end
