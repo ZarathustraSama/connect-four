@@ -72,4 +72,26 @@ describe Grid do
       end
     end
   end
+
+  describe '#check_winner' do
+    context 'where there is no winner' do
+      subject(:grid) { described_class.new }
+
+      it 'returns nil' do
+        expect(grid.check_winner).to eql(nil)
+      end
+    end
+
+    context 'when there is a winner' do
+      subject(:grid) { described_class.new }
+
+      before do
+        allow(grid).to receive(:check_row_winner).and_return(HEART)
+      end
+
+      it 'returns the winner' do
+        expect(grid.check_winner).to eql(HEART)
+      end
+    end
+  end
 end
