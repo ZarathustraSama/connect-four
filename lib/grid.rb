@@ -6,17 +6,19 @@ EMPTY = nil
 
 # Where the game takes place
 class Grid
-  def initialize
-    @grid = initial_state
+  attr_accessor :grid
+
+  def initialize(grid = initial_state)
+    @grid = grid
   end
 
-  def column_win?
+  def check_column_winner
     @grid.each do |column|
       column.each_cons(4) do |a|
-        return true if a.uniq == 1 && a[0] != EMPTY
+        return a[0] if a.uniq.size == 1 && a[0] != EMPTY
       end
     end
-    false
+    nil
   end
 
   private
