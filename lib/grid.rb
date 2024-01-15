@@ -32,9 +32,22 @@ class Grid
     nil
   end
 
+  def check_diagonal_winner
+    @grid[...-3].each do |row|
+      row[...-3].each_with_index do |cell, i|
+        return cell if diagonal_four?(i) && cell != EMPTY
+      end
+    end
+    nil
+  end
+
   private
 
   def initial_state
     Array.new(7) { Array.new(6) { EMPTY } }
+  end
+
+  def diagonal_four?(ind)
+    [@grid[ind][ind], @grid[ind + 1][ind + 1], @grid[ind + 2][ind + 2], @grid[ind + 3][ind + 3]].uniq.count == 1
   end
 end
