@@ -61,6 +61,17 @@ class Grid
     self
   end
 
+  def draw_grid
+    grid = @grid
+    puts "\n---------------"
+    until grid.flatten.empty?
+      grid.each { |column| print "| #{column.pop}" || '|  ' }
+      print '|'
+      puts "\n---------------"
+    end
+    puts "\n"
+  end
+
   private
 
   def initial_state
