@@ -57,7 +57,8 @@ class Grid
   end
 
   def make_move(column, player)
-    @grid[column[column.index(EMPTY)]] = player
+    @grid[column][@grid[column].index(EMPTY)] = player
+    self
   end
 
   private
