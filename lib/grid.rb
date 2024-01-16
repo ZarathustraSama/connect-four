@@ -51,6 +51,9 @@ class Grid
 
   def set_current_player
     return HEART if @grid == initial_state
+    return nil if game_over?
+
+    @grid.flatten.count(HEART) > @grid.flatten.count(DIAMOND) ? DIAMOND : HEART
   end
 
   def make_move(column, player)
