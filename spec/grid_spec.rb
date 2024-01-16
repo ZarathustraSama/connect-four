@@ -12,7 +12,7 @@ describe Grid do
       subject(:grid_win_column) { described_class.new }
 
       it 'returns nil' do
-        expect(grid_win_column.check_column_winner).to eql(nil)
+        expect(grid_win_column.check_column_winner).to be_nil
       end
     end
 
@@ -32,7 +32,7 @@ describe Grid do
       subject(:grid_win_row) { described_class.new }
 
       it 'returns nil' do
-        expect(grid_win_row.check_row_winner).to eql(nil)
+        expect(grid_win_row.check_row_winner).to be_nil
       end
     end
 
@@ -54,7 +54,7 @@ describe Grid do
       subject(:grid_win_diagonal) { described_class.new }
 
       it 'returns nil' do
-        expect(grid_win_diagonal.check_diagonal_winner).to eql(nil)
+        expect(grid_win_diagonal.check_diagonal_winner).to be_nil
       end
     end
 
@@ -78,7 +78,7 @@ describe Grid do
       subject(:grid_win) { described_class.new }
 
       it 'returns nil' do
-        expect(grid_win.check_winner).to eql(nil)
+        expect(grid_win.check_winner).to be_nil
       end
     end
 
@@ -136,7 +136,30 @@ describe Grid do
       end
     end
 
-    context 'in the middle of the game'
+    context 'in the middle of the game' do
+      g = []
+      g << [HEART, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY]
+      6.times { g << [EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY] }
+      subject(:grid_mid) { described_class.new(g) }
+
+      it 'returns the next player (DIAMOND)' do
+        expect(grid_mid.set_current_player).to eql(DIAMOND)
+      end
+    end
+
+    context 'at the end of the game' do
+      g = []
+      7.times { g << [HEART, DIAMOND, HEART, DIAMOND, HEART, DIAMOND] }
+      subject(:grid_end) { described_class.new(g) }
+
+      before do
+        allow(grid_end).to receive(:game_over?).and_return(true)
+      end
+
+      it 'returns nil' do
+        expect(grid_end.set_current_player).to be_nil
+      end
+    end
   end
 
   describe '#make_move' do
