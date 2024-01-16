@@ -2,10 +2,6 @@
 
 require_relative '../lib/grid'
 
-HEART = "\u2665"
-DIAMOND = "\u2666"
-EMPTY = nil
-
 describe Grid do
   describe '#check_column_winner' do
     context 'when there aren\'t four consecutive pieces' do
