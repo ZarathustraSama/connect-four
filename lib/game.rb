@@ -6,8 +6,8 @@ require_relative './grid'
 class Game
   attr_accessor :grid
 
-  def initialize
-    @grid = Grid.new
+  def initialize(grid = Grid.new)
+    @grid = grid
   end
 
   def ask_user_move
@@ -25,6 +25,13 @@ class Game
   def play_game
     loop do
       @grid.draw_grid
+      if @grid.game_over?
+        winner = @grid.check_winner
+        return winner.nil? ? puts('Game Over: It\'s a draw!') : puts("Game Over: #{winner} wins!")
+      else
+        puts "Player #{@grid.set_current_player}'s turn"
+      end
+      @grid = @grid.make_move(ask_user_move, @grid.set_current_player)
     end
   end
 end
