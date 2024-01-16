@@ -94,4 +94,37 @@ describe Grid do
       end
     end
   end
+
+  describe '#game_over?' do
+    context 'if the game is not over' do
+      subject(:grid) { described_class.new }
+
+      it 'returns false' do
+        expect(grid).not_to be_game_over
+      end
+    end
+
+    context 'if the game is over' do
+      g = []
+      7.times { g << [HEART, DIAMOND, HEART, DIAMOND, HEART, DIAMOND] }
+      subject(:grid) { described_class.new(g) }
+
+      it 'returns true' do
+        expect(grid).to be_game_over
+      end
+    end
+  end
+
+  describe '#set_current_player' do
+
+  end
+
+  describe '#make_move' do
+    subject(:grid) { described_class.new }
+    let(:column) { 3 }
+
+    xit 'adds a piece in the correct place' do
+      expect(grid.make_move(column))
+    end
+  end
 end
