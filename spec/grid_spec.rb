@@ -165,9 +165,14 @@ describe Grid do
   describe '#make_move' do
     subject(:grid) { described_class.new }
     let(:column) { 3 }
+    let(:player) { HEART }
+    g = []
+    3.times { g << [EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY] }
+    g << [HEART, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY]
+    3.times { g << [EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY] }
 
-    xit 'adds a piece in the correct place' do
-      expect(grid.make_move(column))
+    it 'adds a piece in the correct place' do
+      expect(grid.make_move(column, player).grid).to eql(g)
     end
   end
 end
