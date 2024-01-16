@@ -41,6 +41,7 @@ describe Game do
     context 'If the game is over after someone won' do
       before do
         allow(grid).to receive(:draw_grid)
+        allow(grid).to receive(:set_current_player).and_return(HEART)
         allow(grid).to receive(:game_over?).and_return(true)
         allow(grid).to receive(:check_winner).and_return(HEART)
       end
@@ -55,6 +56,7 @@ describe Game do
     context 'If the game is over and nobody won' do
       before do
         allow(grid).to receive(:draw_grid)
+        allow(grid).to receive(:set_current_player).and_return(HEART)
         allow(grid).to receive(:game_over?).and_return(true)
         allow(grid).to receive(:check_winner).and_return(nil)
       end
@@ -72,7 +74,7 @@ describe Game do
         allow(grid).to receive(:game_over?).and_return(false, false, true)
         allow(grid).to receive(:check_winner).and_return(DIAMOND)
         allow(grid).to receive(:make_move).and_return(grid, grid)
-        allow(grid).to receive(:set_current_player).and_return(HEART, HEART, DIAMOND, DIAMOND)
+        allow(grid).to receive(:set_current_player).and_return(HEART, DIAMOND)
         allow(game_play).to receive(:ask_user_move).and_return(3, 4)
       end
 
