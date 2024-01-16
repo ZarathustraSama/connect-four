@@ -45,6 +45,18 @@ class Grid
     check_column_winner || check_row_winner || check_diagonal_winner
   end
 
+  def game_over?
+    check_winner || @grid.flatten.none?(nil) ? true : false
+  end
+
+  def set_current_player
+    return HEART if @grid == initial_state
+  end
+
+  def make_move(column, player)
+    @grid[column[column.index(EMPTY)]] = player
+  end
+
   private
 
   def initial_state
