@@ -62,10 +62,13 @@ class Grid
   end
 
   def draw_grid
-    grid = @grid
+    grid = Marshal.load(Marshal.dump(@grid))
     puts "\n---------------"
     until grid.flatten.empty?
-      grid.each { |column| print "| #{column.pop}" || '|  ' }
+      grid.each do |column|
+        cell = column.pop
+        cell.nil? ? print('| ') : print("|#{cell}")
+      end
       print '|'
       puts "\n---------------"
     end
