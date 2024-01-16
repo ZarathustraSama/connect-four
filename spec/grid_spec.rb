@@ -104,10 +104,22 @@ describe Grid do
       end
     end
 
-    context 'if the game is over' do
+    context 'if the game is over, but nobody won' do
       g = []
       7.times { g << [HEART, DIAMOND, HEART, DIAMOND, HEART, DIAMOND] }
       subject(:grid_over) { described_class.new(g) }
+
+      it 'returns true' do
+        expect(grid_over).to be_game_over
+      end
+    end
+
+    context 'if somebody won' do
+      subject(:grid_over) { described_class.new }
+
+      before do
+        allow(grid_over).to receive(:check_winner).and_return(DIAMOND)
+      end
 
       it 'returns true' do
         expect(grid_over).to be_game_over
