@@ -14,8 +14,8 @@ class Game
     grid = @grid.grid
     loop do
       puts 'Choose a column (from 1 to 7)'
-      move = gets
-      column = move - 1 if move.is_a? Integer
+      move = gets.chomp.to_i
+      column = move - 1 if (move - 1).positive?
       return column if column && grid[column][grid[column].index(nil)].nil?
 
       puts 'Can\'t do that! Pick a better spot!'
@@ -24,7 +24,7 @@ class Game
 
   def play_game
     loop do
-      @grid.draw_grid
+      #@grid.draw_grid
       if @grid.game_over?
         winner = @grid.check_winner
         return winner.nil? ? puts('Game Over: It\'s a draw!') : puts("Game Over: #{winner} wins!")

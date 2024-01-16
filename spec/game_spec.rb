@@ -9,7 +9,7 @@ describe Game do
       subject(:game_input) { described_class.new }
 
       before do
-        allow(game_input).to receive(:gets).and_return(5)
+        allow(game_input).to receive(:gets).and_return('5')
       end
 
       it 'returns 4' do
@@ -21,7 +21,7 @@ describe Game do
       subject(:game_input) { described_class.new }
 
       before do
-        allow(game_input).to receive(:gets).and_return('no', 'yes', 3)
+        allow(game_input).to receive(:gets).and_return('no', 'yes', '3')
       end
 
       it 'shows the error message twice' do
