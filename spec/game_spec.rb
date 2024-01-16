@@ -16,5 +16,21 @@ describe Game do
         expect(game_input.ask_user_move).to eql(4)
       end
     end
+
+    context 'If the user gives two wrong inputs, then a correct one' do
+      subject(:game_input) { described_class.new }
+
+      before do
+        allow(game_input).to receive(:gets).and_return('no', 'yes', 3)
+      end
+
+      it 'shows the error message twice' do
+        standard_message = 'Choose a column (from 1 to 7)'
+        error_message = 'Can\'t do that! Pick a better spot!'
+        expect(game_input).to receive(:puts).with(error_message).twice
+        expect(game_input).to receive(:puts).with(standard_message).exactly(3).times
+        game_input.ask_user_move
+      end
+    end
   end
 end
