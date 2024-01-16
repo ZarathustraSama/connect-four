@@ -33,4 +33,58 @@ describe Game do
       end
     end
   end
+
+  describe '#play_game' do
+    let(:grid) { instance_double(Grid) }
+    subject(:game_play) { described_class.new(grid) }
+
+    context 'If the game is over after someone won' do
+      before do
+        allow(grid).to receive(:draw_grid)
+        allow(grid).to receive(:game_over?).and_return(true)
+        allow(grid).to receive(:check_winner).and_return(HEART)
+      end
+
+      it 'shows the winner (HEART) on console' do
+        winner_message = "Game Over: #{HEART} wins!"
+        expect(game_play).to receive(:puts).with(winner_message).once
+        game_play.play_game
+      end
+    end
+
+    context 'If the game is over and nobody won' do
+      before do
+        allow(grid).to receive(:draw_grid)
+        allow(grid).to receive(:game_over?).and_return(true)
+        allow(grid).to receive(:check_winner).and_return(nil)
+      end
+
+      it 'shows the "draw" message on console' do
+        draw_message = 'Game Over: It\'s a draw!'
+        expect(game_play).to receive(:puts).with(draw_message).once
+        game_play.play_game
+      end
+    end
+
+    context 'If the game doesn\'t end for two more turns' do
+      before do
+        allow(grid).to receive(:draw_grid)
+        allow(grid).to receive(:game_over?).and_return(false, false, true)
+        allow(grid).to receive(:check_winner).and_return(DIAMOND)
+        allow(grid).to receive(:make_move).and_return(grid, grid)
+        allow(grid).to receive(:set_current_player).and_return(HEART, HEART, DIAMOND, DIAMOND)
+        allow(game_play).to receive(:ask_user_move).and_return(3, 4)
+      end
+
+      it 'shows the "player\'s turn" message twice' do
+        heart_player_message = "Player #{HEART}'s turn"
+        diamond_player_message = "Player #{DIAMOND}'s turn"
+        winner_message = "Game Over: #{DIAMOND} wins!"
+        expect(game_play).to receive(:puts).with(heart_player_message).once
+        expect(game_play).to receive(:puts).with(diamond_player_message).once
+        expect(game_play).to receive(:puts).with(winner_message).once
+        game_play.play_game
+      end
+    end
+  end
 end
